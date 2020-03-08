@@ -74,9 +74,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'apps.homes',
-    'apps.users',
-    'apps.verifications',
+    'homes',
+    'users',
+    'verifications',
 ]
 
 MIDDLEWARE = [
@@ -270,3 +270,6 @@ CACHES = {
 # 配置session的保存路径
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
+
+# 使用自己定义模型类
+AUTH_USER_MODEL = 'users.User'
