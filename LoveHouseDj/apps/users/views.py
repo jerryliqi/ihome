@@ -99,7 +99,31 @@ class LoginViews(View):
         :param request:
         :return:
         """
-        return http.JsonResponse({"errno": RET.OK, "errmsg": "已登录"})
+        user_dict = json.loads(request.body.decode())
+        mobile = user_dict.get("mobile", "")
+        password = user_dict.get("password", "")
+        # 1、参数检验
+        # 1.1、参数不全
+        if not all([mobile, password]):
+            return http.JsonResponse({"errno": RET.PARAMERR, "errmsg": "参数不全"})
+
+        # 1.2、密码是否符合位数（6-20个字母加数字）
+        if not re.match(r"^[0-9a-zA-Z]{6,20}$", password):
+            return http.JsonResponse({"errno": RET.PARAMERR, "errmsg": "请输入正确的用户名密码"})
+
+        # 将密码md5加密
+        md5_ = md5()
+        md5_.update(password.encode('utf-8'))
+        md5_password = md5_.hexdigest()
+
+        # 用户是否存在
+        user = authenticate(username=mobile, password=md5_password)
+        if not user:
+            return http.JsonResponse({"errno": RET.LOGINERR, "errmsg": "请输入正确的用户名密码"})
+
+        # 状态保持
+        login(request, user)
+        return http.JsonResponse({"errno": RET.OK, "errmsg": "登录成功"})
 
     def delete(self, request):
         """
