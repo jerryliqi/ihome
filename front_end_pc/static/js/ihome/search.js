@@ -45,7 +45,7 @@ function updateHouseData(action) {
         p:next_page
     };
     // 获取房屋列表信息
-    $.get(host + "/api/v1.0/houses", params, function (resp) {
+    $.get(host + "/api/homes/houses", params, function (resp) {
         // 重置是否加载的标识，当前已加载完成
         house_data_querying = false;
         if (resp.errno == 0) {
@@ -81,7 +81,7 @@ $(document).ready(function(){
 
 
     // 获取筛选条件中的城市区域信息
-    $.get(host + "/api/v1.0/areas", function(data){
+    $.get(host + "/api/homes/areas", function(data){
         if ("0" == data.errno) {
             var areaId = queryData["aid"];
             if (areaId) {

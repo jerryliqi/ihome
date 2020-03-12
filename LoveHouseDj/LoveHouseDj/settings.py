@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     'homes',
     'users',
     'verifications',
+    'orders',
 ]
 
 MIDDLEWARE = [
@@ -273,3 +274,7 @@ SESSION_CACHE_ALIAS = "session"
 
 # 使用自己定义模型类
 AUTH_USER_MODEL = 'users.User'
+
+# 七牛云
+# QINIU_URL= "http://pzjstxvsp.bkt.clouddn.com/"
+QINIU_URL=  'http://q31y8e2k1.bkt.clouddn.com/'

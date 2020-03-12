@@ -67,7 +67,7 @@ $(document).ready(function(){
     // 检查用户的登录状态
 
     $.ajax({
-        url: host + 'session',
+        url: host + '/api/users/session',
         type: "get",
         xhrFields: {withCredentials: true},
         success: function (resp) {
@@ -91,7 +91,7 @@ $(document).ready(function(){
 
     // 获取幻灯片要展示的房屋基本信息
     $.ajax({
-        url: host + "/api/v1.0/houses/index",
+        url: host + "/api/homes/index",
         type: "get",
         xhrFields: {withCredentials: true},
         success: function (resp) {
@@ -113,7 +113,7 @@ $(document).ready(function(){
 
     // 获取城区信息,获取完毕之后需要设置城区按钮点击之后相关操作
     $.ajax({
-        url: host + "/api/v1.0/areas",
+        url: host + "/api/homes/areas",
         type: "get",
         xhrFields: {withCredentials: true},
         success: function (resp) {

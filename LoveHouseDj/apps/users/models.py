@@ -19,7 +19,7 @@ class User(AbstractUser):
 
     def to_basic_dict(self):
         data = {
-            "avatar_url": settings.QINIU_URL + self.avatar.name,
+            "avatar_url": self.avatar.name,
             "create_time": datetime.strftime(self.date_joined,'%Y-%m-%d %H:%M:%S'),
             "mobile": self.mobile,
             "name": self.username,

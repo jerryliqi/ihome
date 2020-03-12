@@ -131,3 +131,9 @@ class LoginViews(View):
         :param request:
         :return:
         """
+
+
+class MyViews(View):
+    """
+    我的主页
+    """
