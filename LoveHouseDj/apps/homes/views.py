@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.views import View
 from django.core.cache import cache
 from django.db import DatabaseError
+from django.db.models import Q
 
 from utils.response_code import RET
 from .models import Area, House
@@ -97,7 +98,7 @@ class HouseViews(View):
             if start_date_str:
                 start_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d")
             if end_date_str:
-                end_date = datetime.datetime.strptime(start_date_str, "%Y-%m-%d")
+                end_date = datetime.datetime.strptime(end_date_str, "%Y-%m-%d")
             if start_date and end_date:
                 assert start_date < end_date, Exception("开始时间大于结束时间")
         except Exception as e:
@@ -107,21 +108,22 @@ class HouseViews(View):
         # 3、查询符合条件房源信息
         # 通过入住时间排除已经下单的房间
         if start_date and end_date:
-            house_order_objs = Order.objects.fillter(begin_date__gte=end_date, end_date__lte=start_date)
+            house_order_objs = Order.objects.filter(Q(begin_date__gte=end_date) | Q(end_date__lte=start_date))
         elif start_date:
-            house_order_objs = Order.objects.fillter(end_date__lte=start_date)
+            house_order_objs = Order.objects.filter(end_date__lte=start_date)
         elif end_date:
-            house_order_objs = Order.objects.fillter(begin_date__gte=end_date)
+            house_order_objs = Order.objects.filter(begin_date__gte=end_date)
         else:
             house_order_objs = []
 
         house_ids = [house_order_obj.house_id for house_order_obj in house_order_objs]
         print(house_ids)
+        print(start_date, end_date)
 
         # 查找满足条件的房源
         # 对房源进行排序
         if area_id:
-            house_objs = House.objects.filtter(area=area_id).excute(pk__in=house_ids)
+            house_objs = House.objects.filter(area=area_id).exclude(pk__in=house_ids)
             if sort_key == "booking":
                 # 销量最高
                 house_objs = house_objs.order_by("-order_count")
