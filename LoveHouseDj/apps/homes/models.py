@@ -76,7 +76,7 @@ class House(BaseModel):
             "hid": self.pk,
             "user_id": self.user.id,
             "user_name": self.user.username,
-            "user_avatar": settings.QINIU_URL + self.user.avatar.name if self.user.avatar.name else "",
+            "user_avatar": self.user.avatar.name if self.user.avatar.name else "",
             "title": self.title,
             "price": self.price,
             "address": self.address,

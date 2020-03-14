@@ -1,5 +1,6 @@
 import datetime
 import logging
+import json
 
 from django import http
 from django.shortcuts import render
@@ -8,6 +9,7 @@ from django.core.cache import cache
 from django.db import DatabaseError
 from django.db.models import Q
 from django.core.paginator import Paginator
+from django_redis import get_redis_connection
 
 from utils.response_code import RET
 from utils import constants
@@ -161,3 +163,31 @@ class HouseViews(View):
         :param request:
         :return:
         """
+
+
+class HouseDetailView(View):
+    """
+    房屋详情页
+    """
+    def get(self, request, house_id):
+        """
+        房屋详情页
+        :param request:
+        :return:
+        """
+        user = request.user
+        if not user.is_authenticated:
+            user_id = -1
+        else:
+            user_id = user.id
+        try:
+            house = House.objects.get(id=house_id)
+        except Exception as e:
+            logger.error(e)
+            return http.JsonResponse({"errno": RET.PARAMERR, "errmsg": "参数错误"})
+
+        data = {
+            "house": house.to_full_dict(),
+            "user_id": user_id
+        }
+        return http.JsonResponse({"errno": RET.OK, "errmsg": "OK", "data": data})

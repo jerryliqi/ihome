@@ -18,7 +18,7 @@ $(document).ready(function(){
     var houseId = queryData["id"];
     // 获取该房屋的详细信息
     $.ajax({
-        url: host + "/api/v1.0/houses/" + houseId,
+        url: host + "/api/homes/houses/" + houseId,
         type: "get",
         xhrFields: {withCredentials: true},
         success: function (resp) {
