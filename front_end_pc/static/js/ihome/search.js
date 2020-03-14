@@ -51,7 +51,6 @@ function updateHouseData(action) {
         if (resp.errno == 0) {
             // 赋值总页数,前端记录总页数，在用户上拉加载更多的时候，去判断是否有更多页
             total_page = resp.data.total_page
-
             if (total_page == 0) {
                 $(".house-list").html("暂无数据")
             }else {

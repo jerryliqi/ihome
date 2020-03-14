@@ -7,8 +7,10 @@ from django.views import View
 from django.core.cache import cache
 from django.db import DatabaseError
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 from utils.response_code import RET
+from utils import constants
 from .models import Area, House
 from orders.models import Order
 
@@ -117,8 +119,6 @@ class HouseViews(View):
             house_order_objs = []
 
         house_ids = [house_order_obj.house_id for house_order_obj in house_order_objs]
-        print(house_ids)
-        print(start_date, end_date)
 
         # 查找满足条件的房源
         # 对房源进行排序
@@ -139,7 +139,21 @@ class HouseViews(View):
         else:
             house_objs = []
 
+        paginator = Paginator(house_objs, constants.HOUSE_LIST_PAGE_CAPACITY)
+        # 获取当前页对象
+        page_houses = paginator.page(page)
+        # 获取总页数
+        total_page = paginator.num_pages
+
+        houses = [house.to_basic_dict() for house in page_houses]
+
         # 4、构造参数并返回
+        data = {
+            "total_page": total_page,
+            "houses": houses
+        }
+
+        return http.JsonResponse({"errno": int(RET.OK), "errmsg": "ok", "data": data})
 
     def post(self, request):
         """
