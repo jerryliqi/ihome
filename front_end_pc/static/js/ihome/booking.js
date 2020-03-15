@@ -27,7 +27,7 @@ function showErrorMsg() {
 $(document).ready(function(){
     // 判断用户是否登录
     $.ajax({
-        url: host + '/api/v1.0/session',
+        url: host + '/api/users/session',
         type: "get",
         xhrFields: {withCredentials: true},
         success: function (resp) {
@@ -66,7 +66,7 @@ $(document).ready(function(){
 
     // 获取房屋的基本信息
     $.ajax({
-        url: host + "/api/v1.0/houses/" + houseId,
+        url: host + "/api/homes/houses/" + houseId,
         type: "get",
         xhrFields: {withCredentials: true},
         success: function (resp) {

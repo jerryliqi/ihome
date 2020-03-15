@@ -93,7 +93,7 @@ class House(BaseModel):
         # 房屋图片
         img_urls = []
         for image in self.houseimage_set.all():
-            img_urls.append(settings.QINIU_URL + image.url)
+            img_urls.append(image.url)
         house_dict["img_urls"] = img_urls
 
         # 房屋设施
