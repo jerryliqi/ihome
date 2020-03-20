@@ -8,4 +8,5 @@ urlpatterns = [
     url(r'^login$', views.LoginViews.as_view()),
     url(r'^session$', views.LoginViews.as_view()),
     url(r'^my$', views.MyViews.as_view()),
+    url(r'^orders$', views.OrderViews.as_view()),
 ]

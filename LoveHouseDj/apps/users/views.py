@@ -137,3 +137,16 @@ class MyViews(View):
     """
     我的主页
     """
+
+
+class OrderViews(View):
+    """
+    我的订单
+    """
+    def get(self, request):
+        """
+
+        :param request:
+        :return:
+        """
+        return http.JsonResponse({"errno": RET.OK, "errmsg": "OK"})

@@ -19,7 +19,7 @@ $(document).ready(function(){
     $(window).on('resize', centerModals);
     // 查询房客订单
     $.ajax({
-        url: host + "/api/v1.0/user/orders/?role=custom",
+        url: host + "/api/users/orders?role=custom",
         type: "get",
         xhrFields: {withCredentials: true},
         success: function (resp) {
@@ -38,7 +38,7 @@ $(document).ready(function(){
                 };
                 // 处理评论
                 $.ajax({
-                    url: host + "/api/v1.0/orders/"+orderId+"/comment",
+                    url: host + "/api/orders/order/"+orderId+"/comment",
                     type:"PUT",
                     data:JSON.stringify(data),
                     contentType:"application/json",

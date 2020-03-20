@@ -94,7 +94,7 @@ $(document).ready(function(){
             "house_id": houseId
         }
         $.ajax({
-            url: host + "/api/v1.0/orders/",
+            url: host + "/api/orders/order ",
             type: "post",
             data: JSON.stringify(params),
             contentType: "application/json",

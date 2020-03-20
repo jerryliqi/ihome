@@ -21,4 +21,5 @@ urlpatterns = [
     url('^api/homes/', include('homes.urls')),
     url('^api/users/', include('users.urls')),
     url('^api/verifications/', include('verifications.urls')),
+    url('^api/orders/', include('orders.urls')),
 ]
